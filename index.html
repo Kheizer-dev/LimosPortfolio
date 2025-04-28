@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khen Ashley Limos</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+    <body>
+        <header>
+            <nav>
+                <div class="logo">Khen Ashley</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#recognitions">Recognitions</a></li>
+                    <li><a href="#social-media">Social</a></li>
+                </ul>
+                <div class="dark-mode-toggle">
+                    <i class="fas fa-moon"></i> <!-- Moon icon for dark mode -->
+                </div>
+                <div class="burger">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+            </nav>
+        </header>
+
+        <!--Home Section-->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 id="decoding-text"></h1>
+                <p class="subtitle">A Developer who is always curious and passionate about creating solutions.</p>
+                <a href="resume/Limos-Khen-Ashley-D.-Resume-3.pdf" download="Khen_Ashley_CV.pdf" class="btn">
+                    <i class="fas fa-download"></i> Download CV
+                </a>
+            </div>
+            <div class="floating-images">
+                <img src="images/C sharp logo.png" alt="C#" class="floating-image" style="left: 20%; top: 30%;"">
+                <img src="images/Python.png" alt="Python" class="floating-image" style="left: 40%; top: 50%;">
+                <img src="images/Java.png" alt="Java" class="floating-image" style="left: 60%; top: 20%;">
+                <img src="images/js logo.webp" alt="JavaScript" class="floating-image" style="left: 80%; top: 40%;">
+                <img src="images/HTML5.png" alt="HTML5" class="floating-image" style="left: 20%; top: 70%;">
+                <img src="images/CSS3.png" alt="CSS3" class="floating-image" style="left: 40%; top: 80%;">
+                <img src="images/SQL.webp" alt="SQL" class="floating-image" style="left: 60%; top: 60%;">
+                <img src="images/Android Studio.png" alt="Android Studio" class="floating-image" style="left: 80%; top: 80%;">
+                <img src="images/Net Framework.png" alt=".NET Framework" class="floating-image" style="left: 20%; top: 90%;">
+                <img src="images/MAUI.png" alt="MAUI" class="floating-image" style="left: 40%; top: 30%;">
+                <img src="images/FireBase.png" alt="Firebase" class="floating-image" style="left: 60%; top: 50%;">
+                <img src="images/SQLite.png" alt="SQLite" class="floating-image" style="left: 80%; top: 20%;">
+            </div>
+        </section>
+
+        <!--About Me Section-->
+        <section id="about" class="about-section">
+            <div class="section-header">
+                <h2>About Me</h2>
+
+                <!-- 3D Avatar Column -->
+                <div class="avatar-column">
+                    <div id="avatar-container" class="avatar-container">
+                        <!-- Three.js will inject 3D model here -->
+                        <img src="images/Profile pic.jpg" alt="Khen Ashley" class="fallback-avatar"">
+                    </div>
+                </div>
+
+                <div class="console-container">
+                    <div class="console-header">
+                    <span class="console-dot red"></span>
+                    <span class="console-dot yellow"></span>
+                    <span class="console-dot green"></span>
+                    <span class="console-title">khen_ashley_terminal</span>
+                    </div>
+                    <div id="console-text"></div>
+                </div>
+            </div>
+        
+            <div class="about-grid">
+        
+            <!-- Timeline Column -->
+            <div class="timeline-column">
+                <div class="about-timeline">
+                    <div class="timeline-item" data-year="2023">
+                        <div class="timeline-content">
+                            <h3>STI College Alaminos</h3>
+                            <p>Information Technology</p>
+                            <p>Graduated with a degree in Information Technology.</p>
+                            <div class="skills-used">
+                                <span>C#</span>
+                                <span>Python</span>
+                                <span>Java</span>
+                                <span>JavaScript</span>
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>SQL</span>
+                                <span>Android Studio</span>
+                                <span>.Net Framework</span>
+                                <span>MAUI</span>
+                                <span>Firebase</span>
+                                <span>SQLite</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="circuit-container">
+                    <svg id="circuit-board" viewBox="0 0 800 500"></svg>
+                    <div class="circuit-tooltip"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects">
+            <h2>My Projects</h2>
+            <div class="project-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-front">
+                            <div class="project-preview">
+                                <img src="images/CommUnity Hub Dashboard.png" alt="CommUnity Hub" loading="lazy">
+                            </div>
+                            <h3>CommUnity Hub</h3>
+                        </div>
+                        <div class="project-card-back">
+                            <p class="tech-stack"><i class="fas fa-code"></i> C#, MAUI, .NET, SQL</p>
+                            <p class="project-desc">A digital solution for modernizing barangay operations with streamlined document management and payment processing.</p>
+                            <div class="project-links">
+                                <a href="#demo" class="demo-btn"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                <a href="https://github.com/Kheizer-dev/CommUnityHub.git" class="github-btn"><i class="fab fa-github"></i> Code</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-front">
+                            <div class="project-preview">
+                                <img src="images/Finder's Keepers Application Logo.png" alt="Project 2" loading="lazy">
+                            </div>
+                            <h3>Finders Keepers</h3>
+                        </div>
+                        <div class="project-card-back">
+                            <p class="tech-stack"><i class="fas fa-code"></i> Java, Android Studio, FireBase, SQLite</p>
+                            <p class="project-desc">Geo Locating App for Lost and Found Items.</p>
+                            <div class="project-links">
+                                <a href="#demo" class="demo-btn"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                <a href="#github" class="github-btn"><i class="fab fa-github"></i> Code</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-card-inner">
+                        <div class="project-card-front">
+                            <div class="project-preview">
+                                <img src="https://via.placeholder.com/300x200" alt="Project 3" loading="lazy">
+                            </div>
+                            <h3>Manga App</h3>
+                        </div>
+                        <div class="project-card-back">
+                            <p class="tech-stack"><i class="fas fa-code"></i> Java, Android Studio, SQLite</p>
+                            <p class="project-desc">A Manga/Manhua/Manhwa app for Reading different kinds and genre.</p>
+                            <div class="project-links">
+                                <a href="#demo" class="demo-btn"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                <a href="#github" class="github-btn"><i class="fab fa-github"></i> Code</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="recognitions" class="recognitions">
+            <h2>Recognitions</h2>
+            
+            <div class="recognition-grid">
+              <!-- Certificate Example -->
+              <div class="recognition-card" data-type="certificate">
+                <div class="recognition-badge">
+                  <i class="fas fa-certificate"></i>
+                </div>
+                <img src="images/Java.png" alt="Java Certification">
+                <div class="recognition-details">
+                  <h3>Java Fundamentals</h3>
+                  <p class="recognition-meta">
+                    <span class="recognition-type">Certificate</span>
+                    <span class="recognition-date">14th June 2024</span>
+                  </p>
+                  <p>Issued by Oracle Academy for Satisfactory Completion of All Coursework</p>
+                  <a href="certificates/Java Fundamentals Certificate.pdf" class="recognition-link">View Credential</a>
+                </div>
+              </div>
+          
+              <!-- Achievement Example -->
+              <div class="recognition-card" data-type="achievement">
+                <div class="recognition-badge">
+                  <i class="fas fa-trophy"></i>
+                </div>
+                <div class="recognition-details">
+                  <h3>Hackathon Winner</h3>
+                  <p class="recognition-meta">
+                    <span class="recognition-type">Achievement</span>
+                    <span class="recognition-date">Feb 2024</span>
+                  </p>
+                  <p>Champion in CodeFest 2024 for innovative app solution</p>
+                  <div class="recognition-tags">
+                    <span>Team Leadership</span>
+                    <span>Rapid Prototyping</span>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="recognition-card" data-type="certificate">
+                <div class="recognition-badge">
+                  <i class="fas fa-certificate"></i>
+                </div>
+                <img src="images/C sharp logo.png" alt="Capstone of The Year">
+                <div class="recognition-details">
+                  <h3>Capstone of The Year</h3>
+                  <p class="recognition-meta">
+                    <span class="recognition-type">Certificate</span>
+                    <span class="recognition-date">13th December 2024</span>
+                  </p>
+                  <p>The team's excellence in system design, implementation, presentation, and client satisfaction, combined with their innovation, problem-solving, and attention to detail, has set the highest standard for Capstone projects during the academic year.</p>
+                  <a href="certificates/Capstone of the Year.jpg" class="recognition-link">View Credential</a>
+                </div>
+              </div>
+
+              <div class="recognition-card" data-type="certificate">
+                <div class="recognition-badge">
+                  <i class="fas fa-certificate"></i>
+                </div>
+                <img src="images/C sharp logo.png" alt="Capstone of The Year">
+                <div class="recognition-details">
+                  <h3>Best in Visual Design</h3>
+                  <p class="recognition-meta">
+                    <span class="recognition-type">Certificate</span>
+                    <span class="recognition-date">13th December 2024</span>
+                  </p>
+                  <p>The team's attention to detail, creativity, and ability to design an intuitive and aesthetically pleasing interface sets a high standard for visual design excellence during the Capstone Presentation.</p>
+                  <a href="certificates/Capstone of the Year.jpg" class="recognition-link">View Credential</a>
+                </div>
+              </div>
+            </div>
+        </section>
+
+        <!--Contact Section-->
+        <section id="contact" class="contact">
+            <h2>Contact Me</h2>
+            <form id="contact-form" action="https://formspree.io/f/xyzelzqe" method="POST">
+              <input type="text" name="name" placeholder="Your Name" required>
+              <input type="email" name="email" placeholder="Your Email" required>
+              <textarea name="message" placeholder="Your Message" required></textarea>
+              
+              <!-- Honeypot field for spam prevention -->
+              <input type="text" name="_gotcha" style="display:none">
+              
+              <!-- Custom redirect after success (optional) -->
+              <input type="hidden" name="_next" value="https://yourdomain.com/thanks.html">
+              
+              <!-- Email subject -->
+              <input type="hidden" name="_subject" value="New message from portfolio!">
+              
+              <button type="submit" id="submit-btn">
+                <span id="btn-text">Send Message</span>
+                <div id="btn-spinner" class="spinner"></div>
+              </button>
+              
+              <div id="form-status"></div>
+            </form>
+          </section>
+
+        <!--Social Media Section-->
+        <section id="social-media" class="social-media">
+            <h2>Connect With Me</h2>
+            <div class="social-icons">
+                <a href="https://x.com/Kkhheennyy" target="_blank" class="social-icon">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://github.com/Kheizer-dev" target="_blank" class="social-icon">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/khen-ashley-limos-ab6171328/" target="_blank" class="social-icon">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://www.instagram.com/khenetic.ashh/" target="_blank" class="social-icon">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; <span id="year"></span> Limos, Khen Ashley D. All rights reserved.</p>
+        </footer>
+
+        <script src="script.js"></script>
+    </body>
+</html>
