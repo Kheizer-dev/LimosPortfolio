@@ -175,6 +175,7 @@ body.dark-mode .dark-mode-toggle {
 .hero {
     position: relative;
     height: 100vh;
+    min-height: 600px;
     background: linear-gradient(135deg, #3498db, #1abc9c); /* Gradient background */
     display: flex;
     flex-direction: column;
@@ -183,7 +184,7 @@ body.dark-mode .dark-mode-toggle {
     color: #fff;
     text-align: center;
     overflow: hidden;
-    margin-top: 80px;
+    padding: 80px 20px 0; /* Add top padding for header */
 }
 
 .hero-content {
@@ -418,6 +419,7 @@ body.dark-mode .floating-image {
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     text-align: left;
     font-family: 'Courier New', monospace;
+    min-height: 150px;
   }
   
   .console-header {
@@ -453,6 +455,9 @@ body.dark-mode .floating-image {
     line-height: 1.6;
     white-space: pre-wrap; /* Allows for line breaks */
     font-family: 'Courier New', monospace;
+    max-height: 300px;
+    overflow-y: auto;
+    scrollbar-width: thin;
   }
 
 /* 3D Avatar */
@@ -883,6 +888,43 @@ body.dark-mode .project-card-back {
     display: flex;
     flex-direction: column;
   }
+
+  /* Add to your stylesheet */
+.recognition-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.recognition-card::after {
+  content: attr(data-achievement);
+  position: absolute;
+  top: 15px;
+  right: -70px;
+  width: 200px;
+  padding: 5px 0;
+  background: linear-gradient(45deg, #ff8a00, #e52e71);
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  opacity: 0;
+  transition: opacity 0.3s, right 0.3s;
+}
+
+.recognition-card:hover::after {
+  right: -40px;
+  opacity: 1;
+}
+
+[data-category="academic"]::after {
+  background: linear-gradient(45deg, #1abc9c, #16a085);
+}
+
+[data-category="professional"]::after {
+  background: linear-gradient(45deg, #3498db, #2980b9);
+}
   
   body.dark-mode .recognition-card {
     background: #2c3e50;
@@ -963,17 +1005,19 @@ body.dark-mode .project-card-back {
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #ecf0f1;
   }
   
   .recognition-tags span {
-    background: #ecf0f1;
+    background: #1abc9c;
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.8rem;
   }
   
   body.dark-mode .recognition-tags span {
-    background: #34495e;
+    background: #f39c12;
     color: #ecf0f1;
   }
 
@@ -1385,11 +1429,19 @@ footer {
     font-size: 2rem;
     color: #2c3e50; /* Dark blue-gray */
     transition: color 0.3s ease, transform 0.3s ease;
+    transition: all 0.3s ease;
+    transform: translateY(0) rotate(0);
 }
 
 .social-icon:hover {
     color: #1abc9c; /* Soft teal */
     transform: translateY(-5px);
+    transform: translateY(-5px) rotate(5deg);
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2));
+}
+
+.social-icon:nth-child(odd):hover {
+  transform: translateY(-5px) rotate(-5deg);
 }
 
 /* Typewriter Effect */
@@ -1427,4 +1479,49 @@ footer {
 
 body.dark-mode .char-counter {
     color: #bdc3c7;
+}
+
+/* Enhanced button states */
+.btn {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-origin: center;
+}
+
+.btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Ripple effect */
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255,255,255,0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.btn:focus:not(:active)::after {
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(20, 20);
+    opacity: 0;
+  }
 }

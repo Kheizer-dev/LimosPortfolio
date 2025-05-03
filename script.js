@@ -215,47 +215,91 @@ window.addEventListener('resize', function() {
 });
 
 // ===== Console Text Animation =====
-const consoleText = document.getElementById('console-text');
-const bioLines = [
-  "> Khen Ashley D. Limos\n",
-  "> Professional Summary:\n",
-  "  - Information Technology Student\n", 
-  "  - Consistent Academic Achiever\n",
-  "  - Technical & Soft Skills Developer\n",
-  "> Key Attributes:\n",
-  "  - Detail-oriented\n",
-  "  - Fast Learner\n",
-  "  - Collaborative Team Player",
-];
+document.addEventListener('DOMContentLoaded', () => {
+  const consoleText = document.getElementById('console-text');
+  const bioLines = [
+    "> Khen Ashley D. Limos\n",
+    "> Professional Summary:\n",
+    "  - Information Technology Student\n", 
+    "  - Consistent Academic Achiever\n",
+    "  - Technical & Soft Skills Developer\n",
+    "> Key Attributes:\n",
+    "  - Detail-oriented\n",
+    "  - Fast Learner\n",
+    "  - Collaborative Team Player",
+  ];
 
-let lineIndex = 0;
-let currentLine = 0;
-let currentChar = 0;
-let isNewLine = false;
+  // Create Intersection Observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Start typing when console is visible
+        startTypingAnimation();
+        observer.unobserve(entry.target); // Stop observing after triggering
+      }
+    });
+  }, {
+    threshold: 0.5, // Trigger when 50% of element is visible
+    rootMargin: '0px 0px -100px 0px' // Adjust trigger point slightly higher
+  });
 
-function typeConsole() {
-  if (lineIndex < bioLines.length) {
-    const line = bioLines[lineIndex];
-    
-    if (currentChar < line.length) {
-      // Type character by character
-      consoleText.textContent += line[currentChar];
-      currentChar++;
-      setTimeout(typeConsole, line[currentChar] === '\n' ? 100 : 50);
-    } else {
-      // Move to next line
-      lineIndex++;
-      currentChar = 0;
-      setTimeout(typeConsole, 200);
+  // Observe the console container
+  const consoleContainer = document.querySelector('.console-container');
+  observer.observe(consoleContainer);
+
+  function startTypingAnimation() {
+    let lineIndex = 0;
+    let currentLine = 0;
+    let currentChar = 0;
+    let isNewLine = false;
+
+    function typeConsole() {
+      if (lineIndex < bioLines.length) {
+        const line = bioLines[lineIndex];
+        
+        if (currentChar < line.length) {
+          // Type character by character
+          consoleText.textContent += line[currentChar];
+          currentChar++;
+          
+          // Randomize typing speed slightly for more natural feel
+          const speed = line[currentChar] === '\n' ? 100 : 30 + Math.random() * 40;
+          setTimeout(typeConsole, speed);
+        } else {
+          // Move to next line
+          lineIndex++;
+          currentChar = 0;
+          setTimeout(typeConsole, 200);
+        }
+      } else {
+        // Add blinking cursor after completion
+        consoleText.innerHTML += '<span class="blinking-cursor">_</span>';
+      }
     }
-  } else {
-    // Add blinking cursor after completion
-    consoleText.innerHTML += '<span class="blinking-cursor">_</span>';
-  }
-}
 
-// Initialize typing effect
-setTimeout(typeConsole, 1000);
+    // Clear any existing content
+    consoleText.textContent = '';
+    
+    // Start the animation
+    setTimeout(typeConsole, 500); // Small delay after becoming visible
+  }
+
+  // Add blinking cursor styles if not already present
+  if (!document.querySelector('style[data-blink-cursor]')) {
+    const style = document.createElement('style');
+    style.setAttribute('data-blink-cursor', '');
+    style.textContent = `
+      .blinking-cursor {
+        animation: blink 1s step-end infinite;
+        color: #1abc9c;
+      }
+      @keyframes blink {
+        50% { opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+});
 
 // ===== Circuit Board Animation =====
 document.addEventListener('DOMContentLoaded', function() {
@@ -409,129 +453,201 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// Enhanced Floating Images Animation
 function initFloatingImages() {
-  const heroSection = document.querySelector('.hero');
+  const hero = document.querySelector('.hero');
+  const header = document.querySelector('header');
+  const headerHeight = header.offsetHeight;
   const floatingImages = document.querySelectorAll('.floating-image');
-  const speed = 1.5; // Reduced speed for smoother movement
-  const maxRotation = 15; // Max rotation angle
+  const speed = 1.5;
+  const maxRotation = 15;
 
-  // Set random initial positions and velocities
-  floatingImages.forEach(img => {
-      // Random starting position within hero section
-      const startX = Math.random() * (heroSection.offsetWidth - img.offsetWidth);
-      const startY = Math.random() * (heroSection.offsetHeight - img.offsetHeight);
-      
-      // Random velocity/direction
-      const velocityX = (Math.random() - 0.5) * speed;
-      const velocityY = (Math.random() - 0.5) * speed;
-      
-      // Store animation properties on the element
-      img.floatingData = {
-          x: startX,
-          y: startY,
-          vx: velocityX,
-          vy: velocityY,
-          rotation: Math.random() * maxRotation * 2 - maxRotation,
-          width: img.offsetWidth,
-          height: img.offsetHeight
-      };
+  // Set boundaries
+  const boundaries = {
+    top: headerHeight + 20,
+    right: hero.offsetWidth,
+    bottom: hero.offsetHeight,
+    left: 0
+  };
 
-      // Set initial position
-      img.style.position = 'absolute';
-      img.style.left = `${startX}px`;
-      img.style.top = `${startY}px`;
-      img.style.transform = `rotate(${img.floatingData.rotation}deg)`;
-      img.style.willChange = 'transform, left, top'; // Optimize for performance
+  // Store animation frame IDs per image
+  const animationFrameIds = new Map();
+
+  floatingImages.forEach((img, index) => {
+    // Initialize positions within bounds
+    const startX = Math.random() * (boundaries.right - img.offsetWidth);
+    const startY = boundaries.top + 
+                  Math.random() * (boundaries.bottom - boundaries.top - img.offsetHeight);
+
+    img.style.position = 'absolute';
+    img.style.left = `${startX}px`;
+    img.style.top = `${startY}px`;
+    img.style.zIndex = '5';
+    img.style.transform = 'rotate(0deg) scale(1)';
+    img.style.transition = 'transform 0.3s ease';
+    img.style.willChange = 'transform, left, top';
+    img.style.cursor = 'grab';
+    
+    // Initialize animation data
+    img.animateData = {
+      x: startX,
+      y: startY,
+      vx: (Math.random() - 0.5) * speed,
+      vy: (Math.random() - 0.5) * speed,
+      rotation: Math.random() * maxRotation * 2 - maxRotation,
+      width: img.offsetWidth,
+      height: img.offsetHeight,
+      isDragging: false
+    };
+
+    // Make images draggable
+    img.addEventListener('mousedown', startDrag);
+    img.addEventListener('touchstart', startDrag, { passive: true });
+
+    // Start individual animation
+    animateImage(img, index);
   });
 
-  // Animation loop
-  function animateFloatingImages() {
-    const heroRect = heroSection.getBoundingClientRect();
-      
-      floatingImages.forEach(img => {
-          const data = img.floatingData;
-          
-          // Update position
-          data.x += data.vx;
-          data.y += data.vy;
-          
-          // Boundary collision - Left/Right
-          if (data.x <= 0) {
-              data.x = 0;
-              data.vx *= -1;
-              data.rotation = (Math.random() * maxRotation) * Math.sign(data.vx);
-          } else if (data.x + data.width >= heroRect.width) {
-              data.x = heroRect.width - data.width;
-              data.vx *= -1;
-              data.rotation = (Math.random() * -maxRotation) * Math.sign(data.vx);
-          }
-          
-          // Boundary collision - Top/Bottom
-          if (data.y <= 0) {
-              data.y = 0;
-              data.vy *= -1;
-              data.rotation = (Math.random() * maxRotation) * Math.sign(data.vy);
-          } else if (data.y + data.height >= heroRect.height) {
-              data.y = heroRect.height - data.height;
-              data.vy *= -1;
-              data.rotation = (Math.random() * -maxRotation) * Math.sign(data.vy);
-          }
-          
-          // Apply new position and rotation
-          img.style.left = `${data.x}px`;
-          img.style.top = `${data.y}px`;
-          img.style.transform = `rotate(${data.rotation}deg)`;
-          
-          // Gentle pulsing scale effect
-          const pulse = Math.sin(Date.now() / 2000) * 0.05 + 1;
-          img.style.transform += ` scale(${pulse})`;
-      });
-      
-      requestAnimationFrame(animateFloatingImages);
+  function startDrag(e) {
+    const img = e.currentTarget;
+    const data = img.animateData;
+    data.isDragging = true;
+    
+    // Get initial position
+    const clientX = e.clientX || e.touches[0].clientX;
+    const clientY = e.clientY || e.touches[0].clientY;
+    
+    data.offsetX = clientX - data.x;
+    data.offsetY = clientY - data.y;
+    
+    img.style.cursor = 'grabbing';
+    img.style.zIndex = '100';
+    img.style.transform = `rotate(${data.rotation}deg) scale(1.2)`;
+    img.style.transition = 'transform 0.2s ease';
   }
 
-  // Start animation
-  animateFloatingImages();
+  function dragMove(e) {
+    const draggingImg = [...floatingImages].find(img => img.animateData.isDragging);
+    if (!draggingImg) return;
+    
+    const data = draggingImg.animateData;
+    const clientX = e.clientX || e.touches[0].clientX;
+    const clientY = e.clientY || e.touches[0].clientY;
+    
+    // Calculate new position with boundary checks
+    data.x = Math.max(boundaries.left, 
+                     Math.min(clientX - data.offsetX, 
+                             boundaries.right - data.width));
+    data.y = Math.max(boundaries.top, 
+                     Math.min(clientY - data.offsetY, 
+                             boundaries.bottom - data.height));
+    
+    // Apply subtle rotation while dragging
+    data.rotation = ((data.x / boundaries.right) * maxRotation * 2) - maxRotation;
+    
+    draggingImg.style.left = `${data.x}px`;
+    draggingImg.style.top = `${data.y}px`;
+    draggingImg.style.transform = `rotate(${data.rotation}deg) scale(1.2)`;
+  }
 
-  // Make images draggable (optional)
-  floatingImages.forEach(img => {
-      let isDragging = false;
-      let offsetX, offsetY;
+  function endDrag() {
+    const draggingImg = [...floatingImages].find(img => img.animateData.isDragging);
+    if (!draggingImg) return;
+    
+    const data = draggingImg.animateData;
+    data.isDragging = false;
+    
+    draggingImg.style.cursor = 'grab';
+    draggingImg.style.zIndex = '5';
+    draggingImg.style.transform = `rotate(${data.rotation}deg) scale(1)`;
+    draggingImg.style.transition = 'transform 0.3s ease';
+    
+    // Give new random velocity when released
+    data.vx = (Math.random() - 0.5) * speed * 2;
+    data.vy = (Math.random() - 0.5) * speed * 2;
+  }
+
+  function animateImage(img, index) {
+    const data = img.animateData;
+    
+    if (!data.isDragging) {
+      // Update position only if not being dragged
+      data.x += data.vx;
+      data.y += data.vy;
       
-      img.addEventListener('mousedown', (e) => {
-          isDragging = true;
-          offsetX = e.clientX - img.floatingData.x;
-          offsetY = e.clientY - img.floatingData.y;
-          img.style.cursor = 'grabbing';
-          img.style.zIndex = '100';
-          img.style.transform = img.style.transform.replace('scale(1)', 'scale(1.2)');
-      });
+      // Boundary checks - X axis
+      if (data.x <= boundaries.left) {
+        data.x = boundaries.left;
+        data.vx *= -1;
+        data.rotation = (Math.random() * maxRotation) * Math.sign(data.vx);
+      } else if (data.x + data.width >= boundaries.right) {
+        data.x = boundaries.right - data.width;
+        data.vx *= -1;
+        data.rotation = (Math.random() * -maxRotation) * Math.sign(data.vx);
+      }
       
-      document.addEventListener('mousemove', (e) => {
-          if (!isDragging) return;
-          
-          img.floatingData.x = e.clientX - offsetX;
-          img.floatingData.y = e.clientY - offsetY;
-          img.style.left = `${img.floatingData.x}px`;
-          img.style.top = `${img.floatingData.y}px`;
-      });
+      // Boundary checks - Y axis
+      if (data.y <= boundaries.top) {
+        data.y = boundaries.top;
+        data.vy *= -1;
+        data.rotation = (Math.random() * maxRotation) * Math.sign(data.vy);
+      } else if (data.y + data.height >= boundaries.bottom) {
+        data.y = boundaries.bottom - data.height;
+        data.vy *= -1;
+        data.rotation = (Math.random() * -maxRotation) * Math.sign(data.vy);
+      }
       
-      document.addEventListener('mouseup', () => {
-          if (!isDragging) return;
-          isDragging = false;
-          img.style.cursor = 'grab';
-          img.style.zIndex = '';
-          img.style.transform = img.style.transform.replace('scale(1.2)', 'scale(1)');
-          
-          // Give new random velocity when released
-          img.floatingData.vx = (Math.random() - 0.5) * speed * 2;
-          img.floatingData.vy = (Math.random() - 0.5) * speed * 2;
-      });
+      // Gentle pulsing effect
+      const pulse = Math.sin(Date.now() / 2000 + index) * 0.05 + 1;
       
-      img.style.cursor = 'grab';
-  });
+      // Apply transformations
+      img.style.left = `${data.x}px`;
+      img.style.top = `${data.y}px`;
+      img.style.transform = `rotate(${data.rotation}deg) scale(${pulse})`;
+    }
+    
+    // Continue animation for this specific image
+    animationFrameIds.set(index, requestAnimationFrame(() => animateImage(img, index)));
+  }
+
+  // Event listeners for drag
+  document.addEventListener('mousemove', dragMove);
+  document.addEventListener('touchmove', dragMove, { passive: false });
+  document.addEventListener('mouseup', endDrag);
+  document.addEventListener('touchend', endDrag);
+
+  // Handle resize
+  const resizeHandler = debounce(() => {
+    boundaries.right = hero.offsetWidth;
+    boundaries.bottom = hero.offsetHeight;
+    boundaries.top = header.offsetHeight + 20;
+  }, 100);
+  
+  window.addEventListener('resize', resizeHandler);
+
+  // Cleanup function
+  return () => {
+    animationFrameIds.forEach(id => cancelAnimationFrame(id));
+    document.removeEventListener('mousemove', dragMove);
+    document.removeEventListener('touchmove', dragMove);
+    document.removeEventListener('mouseup', endDrag);
+    document.removeEventListener('touchend', endDrag);
+    window.removeEventListener('resize', resizeHandler);
+  };
 }
+
+// Helper function
+function debounce(func, wait) {
+  let timeout;
+  return () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(func, wait);
+  };
+}
+
+// Initialize with cleanup capability
+const cleanupFloatingImages = initFloatingImages();
+
+// Call cleanupFloatingImages() when needed (e.g., on page transition)
 
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', initFloatingImages);
@@ -737,4 +853,31 @@ document.addEventListener('DOMContentLoaded', function() {
           }
       });
   }
+});
+
+// Add to your JS file
+document.querySelectorAll('.recognition-card').forEach(card => {
+  card.addEventListener('touchstart', () => {
+    card.classList.toggle('show-badge');
+  }, { passive: true });
+});
+
+// Add subtle mouse-follow tilt to cards
+document.querySelectorAll('.project-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const angleX = (y - centerY) / 20;
+    const angleY = (centerX - x) / 20;
+    
+    card.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+  });
+  
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
 });
