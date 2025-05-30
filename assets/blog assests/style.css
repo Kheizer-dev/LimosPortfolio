@@ -1,0 +1,253 @@
+:root {
+  --bg: #f0fdf4;
+  --text: #2e4e1f;
+  --accent: #2e7d32;
+  --post-bg: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.05);
+  --meta: #4e944f;
+}
+
+body.dark-mode {
+  --bg: #121212;
+  --text: #e8f5e9;
+  --accent: #81c784;
+  --post-bg: #1e1e1e;
+  --shadow: rgba(255, 255, 255, 0.05);
+  --meta: #a5d6a7;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 20px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+  background-color: var(--accent);
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+#search {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+}
+
+#toggle-mode {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 999;
+  transition: transform 0.2s;
+}
+
+#toggle-mode:hover {
+  transform: scale(1.2);
+}
+
+
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.blog-container {
+  flex: 3;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.blog-post {
+  background: var(--post-bg);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px var(--shadow);
+}
+
+.blog-post:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px var(--shadow);
+  transition: 0.3s ease;
+}
+
+.post-title {
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+
+.post-meta {
+  font-size: 0.9rem;
+  color: var(--meta);
+  margin-bottom: 10px;
+}
+
+.sidebar {
+  flex: 1;
+  min-width: 250px;
+}
+
+.widget {
+  background: var(--post-bg);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px var(--shadow);
+  margin-bottom: 20px;
+}
+
+.tags span {
+  background: #c8e6c9;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-right: 5px;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.tags span:hover {
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: 0.2s ease;
+}
+
+.load-more-wrapper {
+  text-align: center;
+  margin: 30px 0;
+}
+
+#load-more {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 50px;
+  color: var(--accent);
+}
+
+.clear-btn {
+  background: #ef5350;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.clear-btn:hover {
+  background: #d32f2f;
+}
+
+.filter-btn.active {
+  background: var(--accent);
+  color: white;
+}
+
+.filter-btn {
+  border: none;
+  background: #e0f2f1;
+  margin: 4px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.filter-btn:hover {
+  background: var(--accent);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal.visible {
+  display: flex;
+}
+
+.modal-content {
+  background: var(--post-bg);
+  color: var(--text);
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.styled-btn {
+  background-color: green;
+  color: white;
+  padding: 0.4em 0.8em;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95em;
+  margin: 0.2em;
+  transition: background-color 0.3s ease;
+}
+
+.styled-btn:hover {
+  background-color: lightgreen;
+}
