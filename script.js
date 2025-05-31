@@ -708,13 +708,13 @@ document.addEventListener('DOMContentLoaded', function() {
         <form id="modal-contact-form" action="https://formspree.io/f/xyzelzqe" method="POST">
             <div class="form-group">
                 <label for="name">Your Name</label>
-                <input type="text" id="name" name="name" placeholder="John Doe" required>
+                <input type="text" id="name" name="name" placeholder="Juan Dela Cruz" required>
                 <i class="fas fa-user"></i>
             </div>
             
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                <input type="email" id="email" name="email" placeholder="jdcruz@example.com" required>
                 <i class="fas fa-envelope"></i>
             </div>
             
