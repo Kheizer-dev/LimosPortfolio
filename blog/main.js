@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Modal functionality
-    const modal = document.getElementById('postModal');
-    const modalContent = document.querySelector('.modal-body');
-    const closeBtn = document.querySelector('.close-modal');
-    const blogPosts = document.querySelectorAll('.blog-post');
+  const postsGrid = document.getElementById('postsGrid');
+  const fullPost = document.getElementById('fullPost');
+  const fullPostContent = document.getElementById('fullPostContent');
+  const backButton = document.getElementById('backButton');
     
     // Sample post data (in a real app, this would come from a database/API)
     const postsData = {
@@ -105,9 +104,9 @@ document.addEventListener('DOMContentLoaded', function() {
             date: "May 31, 2025",
             readTime: "8 min read",
             category: "AI",
-            image: "https://img.freepik.com/free-vector/ai-technology-microchip-background-vector-digital-transformation-concept_53876-112222.jpg",
+            image: "images/AI teach.png",
             content: `
-                <img src="https://img.freepik.com/free-vector/ai-technology-microchip-background-vector-digital-transformation-concept_53876-112222.jpg" class="modal-image">
+                <img src="images/AI teach.png" class="modal-image">
                 <h1 class="modal-title">AI Is Not a Threat—It's a Tool We’re Misusing</h1>
                 <span class="modal-date">Published on May 31, 2023 • 8 min read</span>
                 
@@ -154,9 +153,9 @@ document.addEventListener('DOMContentLoaded', function() {
             date: "May 31, 2025",
             readTime: "6 min read",
             category: "College",
-            image: "https://beautifulmanasugalu.wordpress.com/wp-content/uploads/2017/09/college-life-e1504776618916.jpg?w=825",
+            image: "images/ITP2.jpg",
             content: `
-                <img src="https://beautifulmanasugalu.wordpress.com/wp-content/uploads/2017/09/college-life-e1504776618916.jpg?w=825" class="modal-image">
+                <img src="images/ITP2.jpg" class="modal-image">
                 <h1 class="modal-title">College Life</h1>
                 <span class="modal-date">Published on May 31, 2023 • 6 min read</span>
                 
@@ -180,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <li>Networking with professors and industry professionals</li>
                     </ul>
                     <p>These connections have enriched my college experience, providing support and opportunities for personal and professional growth.</p>
-                    <img src="https://www.shutterstock.com/image-photo/laptop-report-friends-learning-library-600nw-2475778113.jpg" alt="College Students" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 4px; margin: 15px 0;">
+                    <img src="images/Coding in the Library.png" alt="College Students" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 4px; margin: 15px 0;">
                     <p class="image-caption">College Students Studying Together</p>
                     
                     <h2>Personal Growth</h2>
@@ -200,40 +199,57 @@ document.addEventListener('DOMContentLoaded', function() {
         }        
     };
     
-    // Open modal when post is clicked
-    blogPosts.forEach(post => {
+    // Open full post view
+    document.querySelectorAll('.blog-post').forEach(post => {
         post.addEventListener('click', function() {
-            const postId = this.getAttribute('data-modal');
-            const post = postsData[postId];
+        const postId = this.getAttribute('data-modal');
+        const post = postsData[postId];
+        
+        if (post) {
+            // Hide posts grid, show full post
+            postsGrid.classList.add('hidden');
+            fullPostContent.innerHTML = post.content;
+            fullPost.classList.add('active');
             
-            if (post) {
-                modalContent.innerHTML = post.content;
-                modal.classList.add('show');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling
-            }
+            // Scroll to top smoothly
+            window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+            });
+        }
         });
     });
     
-    // Close modal when X is clicked
-    closeBtn.addEventListener('click', function() {
-        modal.classList.remove('show');
-        document.body.style.overflow = 'auto'; // Re-enable scrolling
+    // Back button functionality
+    backButton.addEventListener('click', function() {
+        fullPost.classList.remove('active');
+        postsGrid.classList.remove('hidden');
+        
+        // Optional: Scroll back to the clicked post
+        window.scrollTo({
+        top: postsGrid.offsetTop,
+        behavior: 'smooth'
+        });
     });
-    
-    // Close modal when clicking outside content
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            modal.classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
+
+    // Inside your DOMContentLoaded function:
+    const backToTopBtn = document.getElementById('backToTop');
+
+    // Show/hide button on scroll
+    window.addEventListener('scroll', () => {
+    if (window.scrollY > 300 && fullPost.classList.contains('active')) {
+        backToTopBtn.classList.add('visible');
+    } else {
+        backToTopBtn.classList.remove('visible');
+    }
     });
-    
-    // Close modal with Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('show')) {
-            modal.classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
+
+    // Scroll to top when clicked
+    backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
     });
     
     // Animate elements when they come into view
@@ -256,6 +272,11 @@ document.addEventListener('DOMContentLoaded', function() {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    });
+
+    // Hide button when returning to posts grid
+    backButton.addEventListener('click', () => {
+    backToTopBtn.classList.remove('visible');
     });
     
     // Run once on load
@@ -285,3 +306,89 @@ document.addEventListener('DOMContentLoaded', () => {
     bubbles.appendChild(bubble);
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Modal Elements
+  const categoriesModal = document.getElementById('categoriesModal');
+  const categoriesLink = document.getElementById('categoriesLink');
+  const closeModal = document.querySelector('#categoriesModal .close-modal');
+  const categoryOptions = document.querySelectorAll('.category-option');
+  const posts = document.querySelectorAll('.blog-post');
+
+  // Open modal when clicking Categories in nav
+  categoriesLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    categoriesModal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    // Focus first category option
+    setTimeout(() => categoryOptions[0].focus(), 100);
+  });
+
+  // Handle keyboard navigation in modal
+    categoriesModal.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal.click();
+    }
+    });
+
+  // Close modal
+  closeModal.addEventListener('click', function() {
+    categoriesModal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  });
+
+  // Filter posts when category is selected
+  categoryOptions.forEach(option => {
+    option.addEventListener('click', function() {
+      const category = this.dataset.category;
+      
+      // Update active state
+      categoryOptions.forEach(opt => opt.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Filter posts
+      posts.forEach(post => {
+        const postCategory = post.querySelector('.post-category').textContent.toLowerCase();
+        
+        if (category === 'all' || postCategory === category) {
+          post.style.display = 'block';
+          post.classList.add('animate__animated', 'animate__fadeIn');
+        } else {
+          post.style.display = 'none';
+        }
+      });
+
+      // Close modal after selection
+      setTimeout(() => {
+        categoriesModal.classList.remove('show');
+        document.body.style.overflow = 'auto';
+        
+        // Scroll to posts if filtered
+        if (category !== 'all') {
+          document.querySelector('.posts-grid').scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      }, 300);
+    });
+  });
+});
+
+// Update modal with post counts
+function updateCategoryCounts() {
+  const counts = { all: posts.length };
+  
+  posts.forEach(post => {
+    const cat = post.querySelector('.post-category').textContent.toLowerCase();
+    counts[cat] = (counts[cat] || 0) + 1;
+  });
+  
+  categoryOptions.forEach(option => {
+    const cat = option.dataset.category;
+    if (cat !== 'all') {
+      option.textContent += ` (${counts[cat] || 0})`;
+    }
+  });
+}
+// Call this on DOMContentLoaded
+updateCategoryCounts();

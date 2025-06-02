@@ -21,15 +21,16 @@
             </div>
             <nav>
                 <a href="https://limoskhenashley.github.io/LimosPortfolio/"><i class="fas fa-home"></i> Home</a>
-                <a href="#"><i class="fas fa-tags"></i> Categories</a>
+                <a href="#" id="categoriesLink"><i class="fas fa-tags"></i> Categories</a>
             </nav>
         </div>
     </header>
     
     <main class="container">
-        <h2 class="section-title">Latest Posts</h2>
-        
-        <div class="posts-grid">
+    <h2 class="section-title">Latest Posts</h2>
+    
+    <!-- Posts Grid (Visible by default) -->
+        <div class="posts-grid" id="postsGrid">
             <!-- Post 1 -->
             <article class="blog-post" data-modal="post1">
                 <div class="post-image">
@@ -51,7 +52,7 @@
             <!-- Post 2 -->
             <article class="blog-post" data-modal="post2">
                 <div class="post-image">
-                    <img src="https://assets.aboutamazon.com/dims4/default/e73bc85/2147483647/strip/true/crop/4093x2304+7+0/resize/1240x698!/quality/90/?url=https%3A%2F%2Famazon-blogs-brightspot.s3.amazonaws.com%2F36%2F59%2Feba4adcc4f88a972b5639ed1dde0%2Fadobestock-712831308.jpeg" alt="Another blog post image">
+                    <img src="images/AI.png" alt="Another blog post image">
                     <div class="image-overlay"></div>
                 </div>
                 <div class="post-preview">
@@ -70,7 +71,7 @@
             <!-- The Topic is about College Life -->
             <article class="blog-post" data-modal="post3">
                 <div class="post-image">
-                    <img src="https://static.vecteezy.com/system/resources/thumbnails/010/066/263/small/graduation-hat-which-is-a-symbol-of-intelligence-achievement-silhouette-of-a-black-toga-on-a-white-background-editable-symbols-in-eps10-format-free-vector.jpg" alt="Blog post image">
+                    <img src="images/STI Pic.jpg" alt="Blog post image">
                     <div class="image-overlay"></div>
                 </div>
                 <div class="post-preview">
@@ -86,17 +87,18 @@
             </article>
             
         </div>
-    </main>
-    
-    <!-- Modal Structure -->
-    <div class="modal" id="postModal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="modal-body">
-                <!-- Content will be loaded here via JavaScript -->
-            </div>
+
+        <!-- Full Post View (Hidden by default) -->
+        <div class="full-post" id="fullPost">
+            <button class="back-button" id="backButton">
+            <i class="fas fa-arrow-left"></i> Back to Posts
+            </button>
+            <div class="full-post-content" id="fullPostContent"></div>
+            <button class="back-to-top" id="backToTop" aria-label="Back to top">
+            <i class="fas fa-arrow-up"></i>
+  </button>
         </div>
-    </div>
+    </main>
     
     <footer>
         <div class="container">
@@ -123,5 +125,19 @@
     </footer>
     
     <script src="main.js"></script>
+
+    <!-- Category Selection Modal -->
+    <div class="modal" id="categoriesModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-modal">&times;</span>
+            <h2 style="margin-bottom: 1.5rem; margin-left: 10px; color: teal;">Filter by Category</h2>
+            <div class="categories-list">
+            <button class="category-option" data-category="all">All Posts</button>
+            <button class="category-option" data-category="system">System</button>
+            <button class="category-option" data-category="ai">AI</button>
+            <button class="category-option" data-category="college">College</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
