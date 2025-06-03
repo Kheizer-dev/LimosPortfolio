@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </ul>
                     <p>These issues highlight the importance of responsible AI development and usage. As developers, we must ensure that AI systems are transparent, fair, and accountable.</p>
                     
-                    <img src="https://katiecouric.com/wp-content/uploads/2023/07/benefits-of-ai.png" alt="Good Ai" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 4px; margin: 15px 0;">
+                    <img src="images/Learning.png" alt="Good Ai" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 4px; margin: 15px 0;">
                     <p class="image-caption">AI in Good Use</p>
                     
                     <h2>Embracing AI Responsibly</h2>
